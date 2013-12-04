@@ -185,7 +185,32 @@ abstract class AbstractDbMapper extends EventProvider
     }
 
     public function fetchGrid(array $params) {
-        // TODO
+        $select = $this->getSelect();
+        $select->where->equalTo('_deletado', 'N');
+
+        if (key_exists('limit', $params)) {
+            throw new \InvalidArgumentException('fetchGrid function expects parameter limit');
+        }
+
+        if (key_exists('start', $params)) {
+            throw new \InvalidArgumentException('fetchGrid function expects parameter start');
+        }
+
+        $select->limit($params['limit']);
+        $select->offset($params['start']);
+
+        $resultSet = $this->select($select);
+
+        return array(
+            'root' => $resultSet->toArray(),
+            'total' => $this->getTotal(),
+        );
+    }
+
+    protected function getTotal() {
+        $select = $this->getSelect();
+        $select->where->equalTo('_deletado', 'N');
+        return $this->select($select)->count();
     }
 
     /**
