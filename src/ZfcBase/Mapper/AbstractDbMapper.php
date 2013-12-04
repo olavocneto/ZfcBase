@@ -184,6 +184,10 @@ abstract class AbstractDbMapper extends EventProvider
         return $statement->execute();
     }
 
+    public function fetchGrid(array $params) {
+        // TODO
+    }
+
     /**
      * @return string
      */
