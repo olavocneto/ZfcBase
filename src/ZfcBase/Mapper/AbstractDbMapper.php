@@ -188,11 +188,11 @@ abstract class AbstractDbMapper extends EventProvider
         $select = $this->getSelect();
         $select->where->equalTo('_deletado', 'N');
 
-        if (key_exists('limit', $params)) {
+        if (!key_exists('limit', $params)) {
             throw new \InvalidArgumentException('fetchGrid function expects parameter limit');
         }
 
-        if (key_exists('start', $params)) {
+        if (!key_exists('start', $params)) {
             throw new \InvalidArgumentException('fetchGrid function expects parameter start');
         }
 
