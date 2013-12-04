@@ -196,8 +196,16 @@ abstract class AbstractDbMapper extends EventProvider
             throw new \InvalidArgumentException('fetchGrid function expects parameter start');
         }
 
-        $select->limit($params['limit']);
-        $select->offset($params['start']);
+        $options = array(
+            'default' => 0,
+            'min_range' => 0
+        );
+
+        $limit = filter_var($params['limit'], FILTER_VALIDATE_INT, $options);
+        $start = filter_var($params['start'], FILTER_VALIDATE_INT, $options);
+
+        $select->limit($limit);
+        $select->offset($start);
 
         $resultSet = $this->select($select);
 
