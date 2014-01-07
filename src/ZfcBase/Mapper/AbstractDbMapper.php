@@ -184,10 +184,13 @@ abstract class AbstractDbMapper extends EventProvider
         return $statement->execute();
     }
 
-    public function fetchGrid(array $params) {
+    // FIXME Esperado um Object com parâmetro
+    public function fetchGrid($params) {
         $select = $this->getSelect();
         $select->where->equalTo('_deletado', 'N');
 
+        // FIXME
+        // Deve passar pelo Form e ser validado pelo Filter
         if (!key_exists('limit', $params)) {
             throw new \InvalidArgumentException('fetchGrid function expects parameter limit');
         }
