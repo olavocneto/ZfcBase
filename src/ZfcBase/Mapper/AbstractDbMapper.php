@@ -189,23 +189,8 @@ abstract class AbstractDbMapper extends EventProvider
         $select = $this->getSelect();
         $select->where->equalTo('_deletado', 'N');
 
-        // FIXME
-        // Deve passar pelo Form e ser validado pelo Filter
-        if (!key_exists('limit', $params)) {
-            throw new \InvalidArgumentException('fetchGrid function expects parameter limit');
-        }
-
-        if (!key_exists('start', $params)) {
-            throw new \InvalidArgumentException('fetchGrid function expects parameter start');
-        }
-
-        $options = array(
-            'default' => 0,
-            'min_range' => 0
-        );
-
-        $limit = filter_var($params['limit'], FILTER_VALIDATE_INT, $options);
-        $start = filter_var($params['start'], FILTER_VALIDATE_INT, $options);
+        $limit = $params->limit;
+        $start = $params->start;
 
         $select->limit($limit);
         $select->offset($start);
